@@ -1,11 +1,7 @@
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+let humanScore = 0;
+let computerScore = 0;
 
-function capitalizeFirstLetter(val) {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-}
-
+// Game functions
 function getComputerChoice() {
   let choice = "";
   let randomNumber = getRandomInt(3);
@@ -28,4 +24,11 @@ function getHumanChoice() {
   return capitalizeFirstLetter(choice);
 }
 
-console.log(getHumanChoice());
+// Utils
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function capitalizeFirstLetter(val) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
