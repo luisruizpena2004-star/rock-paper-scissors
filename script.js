@@ -1,10 +1,4 @@
-let humanScore = 0;
-let computerScore = 0;
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
+playGame();
 
 // Game functions
 function getComputerChoice() {
@@ -51,16 +45,40 @@ function playRound(humanChoice, computerChoice) {
   }
   console.log(`Player: ${humanChoice}`);
   console.log(`Computer: ${computerChoice}`);
-  if (winner === "Human") {
-    humanScore++;
-    console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-  } else if (winner === "Computer") {
-    computerScore++;
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-  } else {
-    console.log(`Draw! Both chose ${humanChoice}`);
+  return winner;
+}
+
+function playGame() {
+  let roundWinner;
+  let humanScore = 0;
+  let computerScore = 0;
+  let humanSelection;
+  let computerSelection;
+  for (let i = 1; i <= 5; i++) {
+    console.log(`ROUND ${i}`);
+    humanSelection = getHumanChoice();
+    computerSelection = getComputerChoice();
+    roundWinner = playRound(humanSelection, computerSelection);
+    if (roundWinner === "Human") {
+      humanScore++;
+      console.log(`You win! ${humanSelection} beats ${computerSelection}`);
+    } else if (roundWinner === "Computer") {
+      computerScore++;
+      console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
+    } else {
+      console.log(`Draw! Both chose ${humanSelection}`);
+    }
   }
-  return;
+  console.log("RESULTS");
+  if (humanScore === computerScore) {
+    console.log("Draw!");
+  } else if (humanScore > computerScore) {
+    console.log("You Win!");
+  } else {
+    console.log("You Lose!");
+  }
+  console.log(`Player Score: ${humanScore}`);
+  console.log(`Computer Score: ${computerScore}`);
 }
 
 // Utils
