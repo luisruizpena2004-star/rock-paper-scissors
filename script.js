@@ -13,6 +13,7 @@ choiceBtns.addEventListener("click", (e) => {
     let humanChoice = Number(e.target.dataset.value);
     let computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
+    handleWinningScore(5);
 });
 
 function getComputerChoice() {
@@ -21,34 +22,53 @@ function getComputerChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    let labelHumanChoice = getChoiceFromInt(humanChoice);
-    let labelComputerChoice = getChoiceFromInt(computerChoice);
+    const labelHumanChoice = getChoiceFromInt(humanChoice);
+    const labelComputerChoice = getChoiceFromInt(computerChoice);
 
     if (humanChoice === computerChoice) {
-        createResultPara(`You draw! both chose ${labelHumanChoice}`, "gold");
+        createResultElement(
+            "p",
+            `You draw! both chose ${labelHumanChoice}`,
+            "gold",
+        );
     } else if (
         humanChoice - computerChoice === 1 ||
         humanChoice - computerChoice === -2
     ) {
         humanScore++;
-        createResultPara(
+        createResultElement(
+            "p",
             `You win the round! ${labelHumanChoice} beats ${labelComputerChoice}`,
             "green",
         );
     } else {
         computerScore++;
-        createResultPara(
+        createResultElement(
+            "p",
             `You lose the round! ${labelComputerChoice} beats ${labelHumanChoice}`,
             "red",
         );
     }
+
     humanScoreLabel.textContent = humanScore;
     computerScoreLabel.textContent = computerScore;
 }
 
-function createResultPara(text, color) {
-    const para = document.createElement("p");
-    para.textContent = text;
-    para.style.color = color;
-    resultDiv.appendChild(para);
+function handleWinningScore(maxScore) {
+    if (!(humanScore === maxScore || computerScore === maxScore)) return;
+
+    const btns = document.querySelectorAll("button");
+    btns.forEach((e) => e.setAttribute("disabled", "true"));
+    if (humanScore > computerScore) {
+        createResultElement("h2", "YOU WIN!", "green");
+    } else {
+        createResultElement("h2", "YOU LOSE!", "red");
+    }
+}
+
+function createResultElement(type, text, color) {
+    const element = document.createElement(type);
+    element.textContent = text;
+    element.style.color = color;
+    resultDiv.appendChild(element);
 }
